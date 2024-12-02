@@ -1,29 +1,28 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
-
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
+import { Ionicons } from '@expo/vector-icons'
 
 export default function TabLayout() {
-
   return (
-    <Tabs screenOptions={{ headerShown: false }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
-          ),
-        }}
+    <Tabs screenOptions={{
+      headerShown: false
+    }}>
+      <Tabs.Screen 
+      name="(home)" 
+      options={{
+        title: 'Inicio',
+        tabBarIcon: ({ color, focused }) => (
+          <Ionicons name={focused ? 'home-sharp' : 'home-outline'} color={color} size={24} />
+        ),
+      }}
       />
-      <Tabs.Screen
-        name="about"
-        options={{
-          title: 'About',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
-          ),
-        }}
+      <Tabs.Screen 
+      name="settings" 
+      options={{
+        title: 'Configurações',
+        tabBarIcon: ({ color, focused }) => (
+          <Ionicons name={focused ? 'settings-sharp' : 'settings-outline'} color={color} size={24} />
+        ),
+      }}
       />
     </Tabs>
   );
