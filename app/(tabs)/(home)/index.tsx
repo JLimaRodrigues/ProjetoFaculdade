@@ -1,8 +1,48 @@
 import { Link } from 'expo-router';
-import { View, StyleSheet, Text } from 'react-native';
+import { useState, useEffect } from 'react';
+import { View, StyleSheet, Text, Alert } from 'react-native';
 import MapView from 'react-native-maps';
 
+import * as Location from 'expo-location';
+
 export default function HomeScreen() {
+
+  const [location, setLocation] = useState<Location.LocationObject | null>({
+    "timestamp":1733523579312.0232,
+    "coords":{
+      "longitude":-44.44205158856653,
+      "altitudeAccuracy":15.380637168884277,
+      "speed":-1,
+      "accuracy":6.467384207038868,
+      "latitude":-22.448562385995793,
+      "altitude":441.0697250366211,
+      "heading":-1}
+    });
+
+  useEffect(() => {
+    async function getCurrentLocation() {
+      try {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          Alert.alert(
+            'Permissão Negada',
+            'A permissão para acessar a localização foi negada. Usando localização padrão.'
+          );
+          return;
+        }
+  
+        let location = await Location.getCurrentPositionAsync({});
+        setLocation(location);
+      } catch (error) {
+        Alert.alert('Erro', 'Não foi possível obter a localização.');
+        console.error(error);
+      }
+     
+    }
+
+    getCurrentLocation();
+  }, []);
+
   return (
     <View style={styles.container}>
       <MapView
