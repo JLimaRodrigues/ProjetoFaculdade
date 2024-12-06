@@ -5,7 +5,7 @@ export default function DetailsEventsScreen() {
   return (
     <View style={styles.container}>
       <Text>Details Events Screen</Text>
-      <Link href="/(users)">Users</Link>
+      <Link href="/(tabs)/(home)/(events)/(users)">Users</Link>
     </View>
   );
 }

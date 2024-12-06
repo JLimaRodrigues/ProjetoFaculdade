@@ -7,8 +7,9 @@
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/logo-sem-fundo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -31,10 +32,13 @@
     },
     "plugins": [
       "expo-router",
-      ["expo-secure-store",
-      {
-        "faceIDPermission": "Allow $(PRODUCT_NAME) to access your Face ID biometric data."
-      }]
+      [
+        "expo-secure-store",
+        {
+          "faceIDPermission": "Allow $(PRODUCT_NAME) to access your Face ID biometric data."
+        }
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
