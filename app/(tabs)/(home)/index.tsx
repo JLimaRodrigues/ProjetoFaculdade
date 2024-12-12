@@ -1,23 +1,21 @@
 import { Link } from 'expo-router';
 import { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, Alert } from 'react-native';
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 
 import * as Location from 'expo-location';
 
 export default function HomeScreen() {
 
-  const [location, setLocation] = useState<Location.LocationObject | null>({
-    "timestamp":1733523579312.0232,
-    "coords":{
-      "longitude":-44.44205158856653,
-      "altitudeAccuracy":15.380637168884277,
-      "speed":-1,
-      "accuracy":6.467384207038868,
-      "latitude":-22.448562385995793,
-      "altitude":441.0697250366211,
-      "heading":-1}
-    });
+  const DEFAULT_REGION = {
+    latitude: 37.78825,
+    longitude: -122.4324,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  };
+
+  const [location, setLocation] = useState<Location.LocationObject | undefined>(undefined);
+  const [selectedLocation, setSelectedLocation] = useState<Location.LocationObject | undefined>(undefined);
 
   useEffect(() => {
     async function getCurrentLocation() {
@@ -43,17 +41,42 @@ export default function HomeScreen() {
     getCurrentLocation();
   }, []);
 
+  const handleMapPress = (event: any) => {
+    const { nativeEvent } = event;
+    const { coordinate }  = nativeEvent;
+
+    setSelectedLocation({
+      coords: {
+        latitude: coordinate.latitude,
+        longitude: coordinate.longitude
+      }
+    } as Location.LocationObject);
+  }
+
   return (
     <View style={styles.container}>
       <MapView
         style={styles.map}
-        region={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.015,
-          longitudeDelta: 0.0121,
-        }}
-      />
+        region={location 
+          ? {
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }
+          : DEFAULT_REGION}
+        onPress={handleMapPress}
+      >
+        {selectedLocation && (
+          <Marker 
+            coordinate={{
+              latitude: selectedLocation.coords.latitude,
+              longitude: selectedLocation.coords.longitude
+            }}
+            title='Local Selecionado'
+          />
+        )}
+      </MapView>
       <Link style={styles.floatingBtn} href="/(tabs)/(home)/(events)">
         <Text style={styles.floatingBtnText}>Eventos</Text>
       </Link>
