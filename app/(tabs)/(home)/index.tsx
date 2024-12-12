@@ -9,8 +9,8 @@ import { Ionicons } from '@expo/vector-icons';
 export default function HomeScreen() {
 
   const DEFAULT_REGION = {
-    latitude: 37.78825,
-    longitude: -122.4324,
+    latitude: -22.466327644965926,
+    longitude: -44.45145440690605,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   };
@@ -45,6 +45,8 @@ export default function HomeScreen() {
   const handleMapPress = (event: any) => {
     const { nativeEvent } = event;
     const { coordinate }  = nativeEvent;
+
+    console.log(coordinate)
 
     setSelectedLocation({
       coords: {
